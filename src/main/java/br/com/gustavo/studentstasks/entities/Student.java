@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Tb_Student")
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,8 @@ public class Student implements Serializable {
 	private String email;
 
 	private Boolean gender;
+	
+	private Boolean isActive;
 
 	@ManyToMany
 	@JoinTable(name = "Tb_Student_Task", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
@@ -39,7 +43,7 @@ public class Student implements Serializable {
 
 	}
 
-	public Student(Long id, String name, String username, String password, String email, Boolean gender) {
+	public Student(Long id, String name, String username, String password, String email, Boolean gender, Boolean isActive) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,6 +51,7 @@ public class Student implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.gender = gender;
+		this.isActive = isActive;
 	}
 
 	public Long getId() {
@@ -95,6 +100,22 @@ public class Student implements Serializable {
 
 	public void setGender(Boolean gender) {
 		this.gender = gender;
+	}
+	
+	public List<Task> getTasks() {
+		return tasks;
+	}
+	
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

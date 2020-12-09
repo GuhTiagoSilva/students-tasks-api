@@ -22,6 +22,8 @@ public class StudentDTO implements Serializable {
 	private String email;
 
 	private Boolean gender;
+	
+	private Boolean isActive;
 
 	private List<TaskDTO> tasks = new ArrayList<>();
 
@@ -36,9 +38,10 @@ public class StudentDTO implements Serializable {
 		this.password = student.getPassword();
 		this.email = student.getEmail();
 		this.gender = student.getGender();
+		this.isActive = student.getIsActive();
 	}
 
-	public StudentDTO(Long id, String name, String username, String password, String email, Boolean gender) {
+	public StudentDTO(Long id, String name, String username, String password, String email, Boolean gender, Boolean isActive) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,6 +49,7 @@ public class StudentDTO implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.gender = gender;
+		this.isActive = isActive;
 	}
 
 	public StudentDTO(Student student, List<Task> tasks) {
@@ -99,6 +103,22 @@ public class StudentDTO implements Serializable {
 
 	public void setGender(Boolean gender) {
 		this.gender = gender;
+	}
+	
+	public List<TaskDTO> getTasks() {
+		return tasks;
+	}
+	
+	public void setTasks(List<TaskDTO> tasks) {
+		this.tasks = tasks;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
