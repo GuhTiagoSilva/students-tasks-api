@@ -69,8 +69,8 @@ public class StudentService {
 				throw new ResourceNotFoundException("Entity Not Found");
 			
 			copyDtoToEntity(dto, student);
-			student = studentRepository.save(student, student.getTasks());
-			return new StudentDTO(student);
+			student = studentRepository.save(student);
+			return new StudentDTO(student, student.getTasks());
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id Not Found: " + id);
 		}
