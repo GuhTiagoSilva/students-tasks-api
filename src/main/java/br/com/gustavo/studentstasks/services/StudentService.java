@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +17,6 @@ import br.com.gustavo.studentstasks.entities.Student;
 import br.com.gustavo.studentstasks.entities.Task;
 import br.com.gustavo.studentstasks.repositories.StudentRepository;
 import br.com.gustavo.studentstasks.repositories.TaskRepository;
-import br.com.gustavo.studentstasks.services.exceptions.DatabaseException;
 import br.com.gustavo.studentstasks.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -35,15 +32,16 @@ public class StudentService {
 	public StudentDTO insert(StudentDTO studentDTO) {
 		Student student = new Student();
 		copyDtoToEntity(studentDTO, student);
+		student.setIsActive(true);
 		student = studentRepository.save(student);
-		return new StudentDTO(student);
+		return new StudentDTO(student, student.getTasks());
 	}
 
 	@Transactional(readOnly = true)
 	public StudentDTO findById(Long id) {
 		Optional<Student> student = studentRepository.findById(id).filter(x -> x.getIsActive() == true);
 		Student entity = student.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found: " + id));
-		return new StudentDTO(entity);
+		return new StudentDTO(entity, entity.getTasks());
 	}
 
 	@Transactional(readOnly = true)
@@ -51,7 +49,7 @@ public class StudentService {
 		List<Student> students = studentRepository.findAll().stream().filter(x -> x.getIsActive() == true)
 				.collect(Collectors.toList());
 		List<StudentDTO> studentDTOList = new ArrayList<>();
-		students.forEach(student -> studentDTOList.add(new StudentDTO(student)));
+		students.forEach(student -> studentDTOList.add(new StudentDTO(student, student.getTasks())));
 		return studentDTOList;
 	}
 
@@ -66,8 +64,12 @@ public class StudentService {
 	public StudentDTO update(Long id, StudentDTO dto) {
 		try {
 			Student student = studentRepository.getOne(id);
+
+			if (student.getIsActive() == false) 
+				throw new ResourceNotFoundException("Entity Not Found");
+			
 			copyDtoToEntity(dto, student);
-			student = studentRepository.save(student);
+			student = studentRepository.save(student, student.getTasks());
 			return new StudentDTO(student);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id Not Found: " + id);
@@ -86,8 +88,9 @@ public class StudentService {
 		student.getTasks().clear();
 
 		for (TaskDTO taskDTO : dto.getTasks()) {
-			Task task = taskRepository.getOne(taskDTO.getId());
-			student.getTasks().add(task);
+			Optional<Task> task = taskRepository.findById(taskDTO.getId());
+			Task entity = task.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
+			student.getTasks().add(entity);
 		}
 	}
 

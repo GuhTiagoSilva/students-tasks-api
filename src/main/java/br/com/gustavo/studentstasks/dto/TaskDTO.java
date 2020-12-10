@@ -16,6 +16,8 @@ public class TaskDTO implements Serializable {
 	private String title;
 
 	private List<TaskItemDTO> taskItems = new ArrayList<>();
+	
+	private Boolean isActive;
 
 	public TaskDTO() {
 
@@ -26,15 +28,17 @@ public class TaskDTO implements Serializable {
 		taskItems.forEach(taskItem -> this.taskItems.add(new TaskItemDTO(taskItem)));
 	}
 
-	public TaskDTO(Long id, String title) {
+	public TaskDTO(Long id, String title, Boolean isActive) {
 		super();
 		this.id = id;
 		this.title = title;
+		this.isActive = isActive;
 	}
 
 	public TaskDTO(Task task) {
 		this.id = task.getId();
 		this.title = task.getTitle();
+		this.isActive = task.getIsActive();
 	}
 
 	public Long getId() {
@@ -59,6 +63,14 @@ public class TaskDTO implements Serializable {
 
 	public void setTaskItems(List<TaskItemDTO> taskItems) {
 		this.taskItems = taskItems;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

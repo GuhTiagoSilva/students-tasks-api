@@ -31,6 +31,8 @@ public class TaskItem implements Serializable {
 	@JoinColumn(name = "task_id")
 	private Task task;
 	
+	private Boolean isActive;
+	
 	public TaskItem() {
 
 	}
@@ -65,6 +67,14 @@ public class TaskItem implements Serializable {
 
 	public void setDeliveryDate(LocalDate deliveryDate) {
 		this.deliveryDate = deliveryDate;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

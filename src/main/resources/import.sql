@@ -11,3 +11,14 @@ INSERT INTO Tb_Student (Name, UserName, Password, Email, Gender, Is_Active) Valu
 INSERT INTO Tb_Student (Name, UserName, Password, Email, Gender, Is_Active) Values ('Julia Costa', 'JuhCosta', '898956532','juh.teste@gmail.com' ,False, False);
 
 
+
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Fazer a compra do mês', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Estudar para a prova', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Fazer o trabalho da faculdade', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Pagar as contas', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Enviar email do trabalho', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Comprar presente de natal', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Reservar viagem de ano novo', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Praticar Exercícios', True);
+INSERT INTO Tb_Task (Title, Is_Active) Values ('Estudar para apresentação', True);
+

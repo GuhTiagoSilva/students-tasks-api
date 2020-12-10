@@ -19,17 +19,20 @@ public class TaskItemDTO implements Serializable{
 	
 	private TaskDTO taskDTO;
 	
+	private Boolean isActive;
+	
 	public TaskItemDTO() {
 		
 	}
 
-	public TaskItemDTO(Long id, String title, String description, LocalDate deliveryDate, TaskDTO taskDTO) {
+	public TaskItemDTO(Long id, String title, String description, LocalDate deliveryDate, TaskDTO taskDTO, Boolean isActive) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.deliveryDate = deliveryDate;
 		this.taskDTO = taskDTO;
+		this.isActive = isActive;
 	}
 	
 	public TaskItemDTO(TaskItem taskItem) {
@@ -79,6 +82,13 @@ public class TaskItemDTO implements Serializable{
 		this.taskDTO = taskDTO;
 	}
 	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 	
 
 }

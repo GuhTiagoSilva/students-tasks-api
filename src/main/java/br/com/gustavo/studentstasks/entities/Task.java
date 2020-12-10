@@ -25,15 +25,18 @@ public class Task implements Serializable {
 
 	@OneToMany(mappedBy = "task", targetEntity = TaskItem.class)
 	private List<TaskItem> taskItems = new ArrayList<>();
+	
+	private Boolean isActive; 
 
 	public Task() {
 
 	}
 
-	public Task(Long id, String title) {
+	public Task(Long id, String title, Boolean isActive) {
 		super();
 		this.id = id;
 		this.title = title;
+		this.isActive = isActive;
 	}
 
 	public Long getId() {
@@ -58,6 +61,14 @@ public class Task implements Serializable {
 
 	public void setTaskItems(List<TaskItem> taskItems) {
 		this.taskItems = taskItems;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
