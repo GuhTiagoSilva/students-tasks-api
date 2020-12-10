@@ -22,3 +22,12 @@ INSERT INTO Tb_Task (Title, Is_Active) Values ('Reservar viagem de ano novo', Tr
 INSERT INTO Tb_Task (Title, Is_Active) Values ('Praticar Exercícios', True);
 INSERT INTO Tb_Task (Title, Is_Active) Values ('Estudar para apresentação', True);
 
+
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-31', 'Separar dinheiro', True,'Dinheiro', 1);
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-30', 'Organizar Material para Estudo', True, 'Organizar', 2);
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-29', 'Conversar com o grupo sobre o trabalho',  True,'Organizar', 3);
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-28', 'Separar as contas que precisam ser pagas', True,'Separação de Contas', 4);
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-27', 'Entrar na conta de email',  True, 'Email', 5);
+INSERT INTO Tb_Task_Item (Delivery_Date, Description, Is_Active, Title, Task_Id) Values ('2020-12-26', 'Colocar o relógio para despertar mais cedo para praticar exercícios',  True,'Despertador', 9);
+
+

@@ -1,7 +1,7 @@
 package br.com.gustavo.studentstasks.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class TaskItem implements Serializable {
 
 	private String description;
 
-	private LocalDate deliveryDate;
+	private Date deliveryDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "task_id")
@@ -35,6 +35,16 @@ public class TaskItem implements Serializable {
 	
 	public TaskItem() {
 
+	}
+	
+	public TaskItem(Long id, String title, String description, Date deliveryDate, Task task, Boolean isActive) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.deliveryDate = deliveryDate;
+		this.task = task;
+		this.isActive = isActive;
 	}
 
 	public Long getId() {
@@ -61,11 +71,11 @@ public class TaskItem implements Serializable {
 		this.description = description;
 	}
 
-	public LocalDate getDeliveryDate() {
+	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(LocalDate deliveryDate) {
+	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 	
@@ -75,6 +85,14 @@ public class TaskItem implements Serializable {
 	
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public Task getTask() {
+		return task;
+	}
+	
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 }

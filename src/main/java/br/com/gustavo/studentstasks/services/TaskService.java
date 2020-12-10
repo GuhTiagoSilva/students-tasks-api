@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.gustavo.studentstasks.dto.TaskDTO;
+import br.com.gustavo.studentstasks.dto.TaskItemDTO;
 import br.com.gustavo.studentstasks.entities.Task;
 import br.com.gustavo.studentstasks.entities.TaskItem;
+import br.com.gustavo.studentstasks.repositories.TaskItemRepository;
 import br.com.gustavo.studentstasks.repositories.TaskRepository;
 import br.com.gustavo.studentstasks.services.exceptions.ResourceNotFoundException;
 
@@ -22,6 +24,9 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private TaskItemRepository taskItemRepository;
 
 	@Transactional
 	public TaskDTO insert(TaskDTO dto) {
@@ -29,7 +34,7 @@ public class TaskService {
 		Task task = new Task();
 		copyDtoToEntity(task, dto);
 		task = taskRepository.save(task);
-		return new TaskDTO(task);
+		return new TaskDTO(task, task.getTaskItems());
 	}
 
 	@Transactional
@@ -43,7 +48,7 @@ public class TaskService {
 			
 			copyDtoToEntity(task, dto);
 			task = taskRepository.save(task);
-			return new TaskDTO(task);
+			return new TaskDTO(task, task.getTaskItems());
 
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Entity Not Found");
@@ -76,11 +81,15 @@ public class TaskService {
 
 	private void copyDtoToEntity(Task entity, TaskDTO dto) {
 
-		List<TaskItem> taskItemList = new ArrayList<>();
-		taskItemList.forEach(item -> taskItemList.add(item));
 		entity.setIsActive(dto.getIsActive());
-		entity.setTaskItems(taskItemList);
 		entity.setTitle(dto.getTitle());
+		entity.getTaskItems().clear();
+		
+		for(TaskItemDTO taskItemDTO : dto.getTaskItems()) {
+			Optional<TaskItem> optional = taskItemRepository.findById(taskItemDTO.getId());
+			TaskItem taskItem = optional.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
+			entity.getTaskItems().add(taskItem);
+		}
 
 	}
 

@@ -1,8 +1,11 @@
 package br.com.gustavo.studentstasks.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.gustavo.studentstasks.entities.Task;
 import br.com.gustavo.studentstasks.entities.TaskItem;
 
 public class TaskItemDTO implements Serializable{
@@ -15,9 +18,10 @@ public class TaskItemDTO implements Serializable{
 
 	private String description;
 
-	private LocalDate deliveryDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	private Date deliveryDate;
 	
-	private TaskDTO taskDTO;
+	private TaskDTO task;
 	
 	private Boolean isActive;
 	
@@ -25,13 +29,13 @@ public class TaskItemDTO implements Serializable{
 		
 	}
 
-	public TaskItemDTO(Long id, String title, String description, LocalDate deliveryDate, TaskDTO taskDTO, Boolean isActive) {
+	public TaskItemDTO(Long id, String title, String description, Date deliveryDate, TaskDTO taskDTO, Boolean isActive) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.deliveryDate = deliveryDate;
-		this.taskDTO = taskDTO;
+		this.task = taskDTO;
 		this.isActive = isActive;
 	}
 	
@@ -40,6 +44,14 @@ public class TaskItemDTO implements Serializable{
 		this.title = taskItem.getTitle();
 		this.description = taskItem.getDescription();
 		this.deliveryDate = taskItem.getDeliveryDate();
+		this.isActive = taskItem.getIsActive();
+		this.task = new TaskDTO(taskItem.getTask());
+		
+	}
+	
+	public TaskItemDTO (TaskItem taskItem, Task task) {
+		this(taskItem);
+		this.task = new TaskDTO(task);
 	}
 
 	public Long getId() {
@@ -66,20 +78,20 @@ public class TaskItemDTO implements Serializable{
 		this.description = description;
 	}
 
-	public LocalDate getDeliveryDate() {
+	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(LocalDate deliveryDate) {
+	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
 	public TaskDTO getTaskDTO() {
-		return taskDTO;
+		return task;
 	}
 
 	public void setTaskDTO(TaskDTO taskDTO) {
-		this.taskDTO = taskDTO;
+		this.task = taskDTO;
 	}
 	
 	public Boolean getIsActive() {
